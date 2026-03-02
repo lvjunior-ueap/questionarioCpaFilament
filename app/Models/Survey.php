@@ -13,6 +13,7 @@ class Survey extends Model
         'year',
         'version',
         'is_active',
+        'intro_text',
     ];
 
     protected $casts = [
@@ -35,4 +36,11 @@ class Survey extends Model
             }
         });
     }
+
+    public function dimensions()
+    {
+        return $this->hasMany(Dimension::class)
+            ->orderBy('order');
+    }
+
 }
