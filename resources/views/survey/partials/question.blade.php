@@ -26,4 +26,9 @@
         </label>
     @endforeach
 
+@elseif($question->type->value === 'text')
+    <textarea name="{{ $name }}" rows="4" cols="60"></textarea>
 @endif
+
+@endif
+

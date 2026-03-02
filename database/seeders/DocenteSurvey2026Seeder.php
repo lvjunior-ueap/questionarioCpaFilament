@@ -487,7 +487,21 @@ TEXT
             ]);
 
             $this->createLikertScale7($question);
-        }
+        } //fim10
+
+        /*
+        |--------------------------------------------------------------------------
+        | Sugestões
+        |--------------------------------------------------------------------------
+        */
+
+        $survey->questions()->create([
+            'survey_id' => $survey->id,
+            'dimension_id' => null,
+            'text' => 'Sugestões:',
+            'type' => QuestionType::TEXT,
+            'required' => false,
+            'order' => 999,        ]);
 
 
 
