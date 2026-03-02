@@ -15,7 +15,8 @@ class PublicSurveyController extends Controller
             ->where('year', 2026)
             ->where('is_active', true)
             ->with([
-                'questions.options',
+                'generalQuestions.options',
+                'finalQuestions.options',
                 'dimensions.questions.options'
             ])
             ->firstOrFail();

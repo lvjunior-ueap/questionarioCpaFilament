@@ -43,10 +43,19 @@ class Survey extends Model
             ->orderBy('order');
     }
 
-    public function questions()
+    public function generalQuestions()
     {
         return $this->hasMany(Question::class)
             ->whereNull('dimension_id')
+            ->where('text', '!=', 'Sugestões:')
+            ->orderBy('order');
+    }
+
+    public function finalQuestions()
+    {
+        return $this->hasMany(Question::class)
+            ->whereNull('dimension_id')
+            ->where('text', 'Sugestões:')
             ->orderBy('order');
     }
 

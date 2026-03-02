@@ -15,17 +15,27 @@
 <form method="POST" action="{{ route('survey.submit', $survey->audience->value) }}">
     @csrf
 
-    <hr>
+    {{-- ===================== --}}
+    {{-- PERGUNTAS INICIAIS --}}
+    {{-- ===================== --}}
 
-    <h2>Perguntas Iniciais</h2>
+    @if($survey->generalQuestions->count())
+        <hr>
+        <h2>Perguntas Iniciais</h2>
 
-    @foreach($survey->questions as $question)
-        <div style="margin-bottom:20px;">
-            <p><strong>{{ $question->text }}</strong></p>
+        @foreach($survey->generalQuestions as $question)
+            <div style="margin-bottom:20px;">
+                <p><strong>{{ $question->text }}</strong></p>
 
-            @include('survey.partials.question', ['question' => $question])
-        </div>
-    @endforeach
+                @include('survey.partials.question', ['question' => $question])
+            </div>
+        @endforeach
+    @endif
+
+
+    {{-- ===================== --}}
+    {{-- DIMENSÕES --}}
+    {{-- ===================== --}}
 
     @foreach($survey->dimensions as $dimension)
 
@@ -42,6 +52,26 @@
 
     @endforeach
 
+
+    {{-- ===================== --}}
+    {{-- SUGESTÕES (FINAL) --}}
+    {{-- ===================== --}}
+
+    @if($survey->finalQuestions->count())
+        <hr>
+        <h2>Considerações Finais</h2>
+
+        @foreach($survey->finalQuestions as $question)
+            <div style="margin-bottom:20px;">
+                <p><strong>{{ $question->text }}</strong></p>
+
+                @include('survey.partials.question', ['question' => $question])
+            </div>
+        @endforeach
+    @endif
+
+
+    <hr>
     <button type="submit">Enviar Respostas</button>
 
 </form>

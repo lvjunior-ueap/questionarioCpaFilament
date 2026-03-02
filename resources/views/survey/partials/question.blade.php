@@ -30,5 +30,3 @@
     <textarea name="{{ $name }}" rows="4" cols="60"></textarea>
 @endif
 
-@endif
-
