@@ -13,6 +13,7 @@ class Question extends Model
         'type',
         'required',
         'order',
+        'survey_id',
     ];
 
     protected $casts = [
@@ -34,5 +35,10 @@ class Question extends Model
     public function answers()
     {
         return $this->hasMany(Answer::class);
+    }
+
+    public function survey()
+    {
+        return $this->belongsTo(Survey::class);
     }
 }

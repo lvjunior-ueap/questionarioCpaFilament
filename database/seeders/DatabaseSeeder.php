@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call(DocenteSurvey2026Seeder::class);
+        $this->call(TecnicoSurvey2026Seeder::class);
+        $this->call(DiscenteSurvey2026Seeder::class);
 
         // User::factory(10)->create();
 
