@@ -3,22 +3,29 @@
 namespace Database\Seeders;
 
 use App\Models\Survey;
+use App\Models\Dimension;
 use App\Models\Question;
 use App\Enums\AudienceType;
 use App\Enums\QuestionType;
 use Illuminate\Database\Seeder;
 
-class DiscenteSurvey2026Seeder extends Seeder
+class ComunidadeExternaSurvey2026Seeder extends Seeder
 {
     public function run(): void
     {
         $survey = Survey::create([
-            'name' => 'CPA Discente 2026',
-            'audience' => AudienceType::DISCENTE,
+            'name' => 'CPA Comunidade Externa 2026',
+            'audience' => AudienceType::COMUNIDADE_EXTERNA,
             'year' => 2026,
             'version' => 1,
             'is_active' => true,
-            'intro_text' => 'COLE AQUI O TEXTO INTRODUTÓRIO DO DISCENTE',
+            'intro_text' => <<<TEXT
+Questionário de Avaliação aplicado à Comunidade Externa – Ano de referência 2025
+
+Prezado(a) cidadão, cidadã (comunidade externa),
+
+Este questionário integra parte do processo de avaliação institucional da Universidade do Estado do Amapá (UEAP). Trata-se de um instrumento de autoavaliação exigido pelo Sistema Nacional de Avaliação da Educação Superior (Sinaes), do Ministério da Educação, que visa produzir conhecimentos que colaborem para o aperfeiçoamento da instituição. A autoavaliação da UEAP é coordenada pela Comissão Própria de Avaliação (CPA) e refere-se ao ano de 2025. Sua participação será breve, anônima e de extrema relevância. Tente responder de modo mais sincero e exato possível.
+TEXT
         ]);
 
         /*
@@ -29,7 +36,7 @@ class DiscenteSurvey2026Seeder extends Seeder
 
         $vinculo = $survey->questions()->create([
             'dimension_id' => null,
-            'text' => 'Atualmente você possui vínculo ativo com a UEAP?',
+            'text' => 'Atualmente tem um vínculo com a UEAP?',
             'type' => QuestionType::RADIO,
             'required' => true,
             'order' => 1,
@@ -67,10 +74,8 @@ class DiscenteSurvey2026Seeder extends Seeder
         $indicadoresDim1 = [
             'Conheço a missão da UEAP.',
             'A missão institucional é clara.',
-            'A missão institucional orienta as decisões da gestão no meu setor/unidade.',
             'Conheço o plano de desenvolvimento anual.',
             'Conheço o PDI vigente.',
-            'As ações desenvolvidas pelo meu setor/unidade estão alinhadas às diretrizes e metas previstas no PDI.',
             'O PDI é utilizado como instrumento efetivo de planejamento.',
         ];
 
@@ -85,8 +90,7 @@ class DiscenteSurvey2026Seeder extends Seeder
             ]);
 
             $this->createLikertScale7($question);
-        }//fim1 
-
+        } //fim1
 
         /*
         |--------------------------------------------------------------------------
@@ -117,10 +121,7 @@ class DiscenteSurvey2026Seeder extends Seeder
             'Existem mecanismos institucionais de estímulo à produção acadêmica (por exemplo: editais, bolsas, apoio técnico e/ou financeiro, dentre outros).',
             'Os mecanismos institucionais de estímulo à produção acadêmica são satisfatórios.',
             'Os mecanismos institucionais de estímulo à produção acadêmica são divulgados.',
-            'Há políticas para garantir o acesso satisfatório a periódicos científicos em plataformas digitais.',
-            'O programa de auxílio à participação em eventos científicos me atende de forma satisfatória.',
             'Os programas de intercâmbio e internacionalização são divulgados.',
-            'Os programas de intercâmbio e internacionalização são satisfatórios.',
             'Há ampla divulgação das atividades do Comitê de Ética na Pesquisa envolvendo Seres Humanos (CEP).',
             'Há ampla divulgação das atividades do Comitê de Salva Guarda da UEAP.',
         ];
@@ -172,7 +173,7 @@ class DiscenteSurvey2026Seeder extends Seeder
             ]);
 
             $this->createLikertScale7($question);
-        } //fim3
+        } //fim 3
 
         /*
         |--------------------------------------------------------------------------
@@ -202,7 +203,7 @@ class DiscenteSurvey2026Seeder extends Seeder
             'E-mail',
             'Outras',
             'Nenhuma',
-        ]); //bloco1
+        ]); //bloco 1
 
         $meios = [
             'Rádio',
@@ -224,7 +225,7 @@ class DiscenteSurvey2026Seeder extends Seeder
             ]);
 
             $this->createLikertScale6SemNSA($question);
-        }//bloco 2
+        } //bloco 2
 
         $indicadoresDim4 = [
             'Eu consigo me comunicar com a UEAP de forma satisfatória.',
@@ -255,49 +256,7 @@ class DiscenteSurvey2026Seeder extends Seeder
             ]);
 
             $this->createLikertScale6SemNSA($question);
-        } //bloco3
-
-        /*
-        |--------------------------------------------------------------------------
-        | Dimensão VI – Organização e gestão da instituição
-        |--------------------------------------------------------------------------
-        */
-
-        $dimension6 = $survey->dimensions()->create([
-            'name' => 'Dimensão VI – Organização e gestão da instituição',
-            'order' => 6,
-        ]);
-
-        $indicadoresDim6 = [
-            'Os coordenadores de cursos cumprem de maneira satisfatória suas funções.',
-            'As chefias de setores e pró-reitorias cumprem de maneira satisfatória suas funções.',
-            'As comissões, comitês e câmaras cumprem de maneira satisfatória suas funções.',
-            'A Gestão da Reitoria da UEAP e seu gabinete cumprem de maneira satisfatória suas funções.',
-            'Há participação efetiva dos diferentes segmentos da comunidade universitária nos processos decisórios.',
-            'As tomadas de decisões na Instituição são democráticas.',
-            'As instâncias deliberativas e de gestão possuem autonomia compatível com suas atribuições institucionais.',
-            'A gestão da instituição é transparente.',
-            'As gestões internas da UEAP explicitam seus planejamentos anuais.',
-            'A atuação das representatividades no Conselho Superior (CONSU) é satisfatória.',
-            'A atuação do Colegiado do Curso é autônoma.',
-            'A atuação da Pró-Reitoria de Graduação (Prograd) é satisfatória.',
-            'A atuação da Pró-Reitoria de Pesquisa e Pós-Graduação (Propesp) é satisfatória.',
-            'A atuação da Pró-Reitoria de Extensão (Proext) é satisfatória.',
-            'A atuação da Pró-Reitoria de Planejamento e Administração (Proplad) é satisfatória.',
-        ];
-
-        foreach ($indicadoresDim6 as $index => $texto) {
-
-            $question = $dimension6->questions()->create([
-                'survey_id' => $survey->id,
-                'text' => $texto,
-                'type' => QuestionType::LIKERT,
-                'required' => true,
-                'order' => $index + 1,
-            ]);
-
-            $this->createLikertScale7($question);
-        } //fim 6
+        } //bloco3 
 
         /*
         |--------------------------------------------------------------------------
@@ -337,78 +296,7 @@ class DiscenteSurvey2026Seeder extends Seeder
             ]);
 
             $this->createLikertScale7($question);
-        } //fim 7
-
-        /*
-        |--------------------------------------------------------------------------
-        | Dimensão VIII – Planejamento e avaliação institucional
-        |--------------------------------------------------------------------------
-        */
-
-        $dimension8 = $survey->dimensions()->create([
-            'name' => 'Dimensão VIII – Planejamento e avaliação institucional',
-            'order' => 8,
-        ]);
-
-        $indicadoresDim8 = [
-            'Meu setor executa autoavaliações internas.',
-            'Participo de autoavaliações executadas pelo meu setor.',
-            'A Comissão Própria de Avaliação (CPA) atua satisfatoriamente.',
-            'Os resultados das avaliações institucionais anteriores foram divulgados.',
-            'O planejamento da UEAP é colaborativo e possui representantes docentes, discentes e técnicos.',
-            'As gestões internas da UEAP incorporam as sugestões divulgadas nos relatórios de avaliação institucional no seu planejamento.',
-        ];
-
-        foreach ($indicadoresDim8 as $index => $texto) {
-
-            $question = $dimension8->questions()->create([
-                'survey_id' => $survey->id,
-                'text' => $texto,
-                'type' => QuestionType::LIKERT,
-                'required' => true,
-                'order' => $index + 1,
-            ]);
-
-            $this->createLikertScale7($question);
-        } //fim 8
-
-        /*
-        |--------------------------------------------------------------------------
-        | Dimensão IX – Políticas de atendimento aos estudantes
-        |--------------------------------------------------------------------------
-        */
-
-        $dimension9 = $survey->dimensions()->create([
-            'name' => 'Dimensão IX – Políticas de atendimento aos estudantes',
-            'order' => 9,
-        ]);
-
-        $indicadoresDim9 = [
-            'A recepção e socialização de ingressantes é feita de forma clara e objetiva.',
-            'O Programa de Assistência Estudantil é satisfatório.',
-            'Conheço as ações de permanência estudantil da UEAP.',
-            'As ações de permanência estudantil são satisfatórias.',
-            'O atendimento da Unidade de Assistência Estudantil (PROEXT/DACAE/UAE) é satisfatório.',
-            'O atendimento da Coordenação de curso é satisfatório.',
-            'O atendimento da Divisão de Registro e Controle Acadêmico (DRCA) é satisfatório.',
-            'O atendimento do Setor de Estágio é satisfatório.',
-            'O atendimento da Unidade de Educação Inclusiva (UEI) é satisfatório.',
-            'A Instituição considera as avaliações e demandas estudantis na formulação de políticas institucionais.',
-            'Existe um diálogo constante entre a Instituição e as Diretorias Acadêmicas.',
-        ];
-
-        foreach ($indicadoresDim9 as $index => $texto) {
-
-            $question = $dimension9->questions()->create([
-                'survey_id' => $survey->id,
-                'text' => $texto,
-                'type' => QuestionType::LIKERT,
-                'required' => true,
-                'order' => $index + 1,
-            ]);
-
-            $this->createLikertScale7($question);
-        } //fim 9
+        }
 
         /*
         |--------------------------------------------------------------------------
@@ -441,10 +329,27 @@ class DiscenteSurvey2026Seeder extends Seeder
             ]);
 
             $this->createLikertScale7($question);
-        } //fim 10        
+        }
 
 
-    } //Fim run()
+
+        /*
+        |--------------------------------------------------------------------------
+        | Sugestões
+        |--------------------------------------------------------------------------
+        */
+
+        $survey->questions()->create([
+            'survey_id' => $survey->id,
+            'dimension_id' => null,
+            'text' => 'Sugestões:',
+            'type' => QuestionType::TEXT,
+            'required' => false,
+            'order' => 999,
+        ]);
+
+
+    }
 
     private function createOptions(Question $question, array $labels): void
     {
@@ -483,12 +388,7 @@ class DiscenteSurvey2026Seeder extends Seeder
             'Concordo totalmente',
         ];
 
-        foreach ($labels as $index => $label) {
-            $question->options()->create([
-                'label' => $label,
-                'value' => $index + 1,
-                'order' => $index + 1,
-            ]);
-        }
+        $this->createOptions($question, $labels);
     }
 }
+        
