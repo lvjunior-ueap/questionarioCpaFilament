@@ -178,13 +178,331 @@ TEXT
             $this->createLikertScale7($question);
         } //fim 3
 
-        
+        /*
+        |--------------------------------------------------------------------------
+        | Dimensão IV – Comunicação com a sociedade
+        |--------------------------------------------------------------------------
+        */
 
+        $dimension4 = $survey->dimensions()->create([
+            'name' => 'Dimensão IV – Comunicação com a sociedade',
+            'order' => 4,
+        ]);
 
+        /*
+        |--------------------------------------------------------------------------
+        | Formas de comunicação conhecidas
+        |--------------------------------------------------------------------------
+        */
 
+        $q1 = $dimension4->questions()->create([
+            'survey_id' => $survey->id,
+            'text' => 'Qual(is) forma(s) de comunicação da UEAP eu conheço? Marque todas as opções possíveis.',
+            'type' => QuestionType::CHECKBOX,
+            'required' => false,
+            'order' => 1,
+        ]);
 
+        $this->createOptions($q1, [
+            'Rádio',
+            'TV/Canal Online',
+            'Jornal/Revista',
+            'Site',
+            'Redes sociais',
+            'E-mail',
+            'Outras',
+            'Nenhuma',
+        ]);
 
+        /*
+        |--------------------------------------------------------------------------
+        | Eficiência dos meios de comunicação
+        |--------------------------------------------------------------------------
+        */
 
+        $meios = [
+            'Rádio',
+            'TV/Canal online',
+            'Jornal/Revista',
+            'Site',
+            'Redes sociais',
+            'E-mail',
+        ];
+
+        foreach ($meios as $index => $texto) {
+
+            $question = $dimension4->questions()->create([
+                'survey_id' => $survey->id,
+                'text' => "A comunicação por meio de {$texto} é eficiente.",
+                'type' => QuestionType::LIKERT,
+                'required' => true,
+                'order' => 2 + $index,
+            ]);
+
+            $this->createLikertScale6SemNSA($question);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Indicadores gerais de comunicação
+        |--------------------------------------------------------------------------
+        */
+
+        $indicadores = [
+            'Eu consigo me comunicar com a UEAP de forma satisfatória.',
+            'Eu conheço os campi (diferentes polos) da UEAP.',
+            'Eu conheço as formas de ingresso da UEAP.',
+            'Eu conheço os cursos de graduação da UEAP.',
+            'Eu conheço os cursos de pós-graduação da UEAP.',
+            'Eu conheço as atividades de ensino da UEAP.',
+            'Eu conheço as atividades de pesquisa da UEAP.',
+            'Eu conheço as atividades de extensão da UEAP.',
+            'As atividades abertas ao público da UEAP são acessíveis.',
+            'A agenda de atividades da UEAP abertas ao público é divulgada continuamente.',
+            'As atividades da UEAP abertas ao público são divulgadas com antecedência suficiente.',
+            'O Setor de Protocolo (registro e gestão de processos) da UEAP atende a comunidade de forma satisfatória.',
+            'O Setor de Ouvidoria atende a comunidade de forma satisfatória.',
+        ];
+
+        foreach ($indicadores as $index => $texto) {
+
+            $question = $dimension4->questions()->create([
+                'survey_id' => $survey->id,
+                'text' => $texto,
+                'type' => QuestionType::LIKERT,
+                'required' => true,
+                'order' => 8 + $index,
+            ]);
+
+            $this->createLikertScale6SemNSA($question);
+        } //fim 4
+
+        /*
+        |--------------------------------------------------------------------------
+        | Dimensão V – Políticas de pessoal e condições de trabalho
+        |--------------------------------------------------------------------------
+        */
+
+        $dimension5 = $survey->dimensions()->create([
+            'name' => 'Dimensão V – Políticas de pessoal e condições de trabalho',
+            'order' => 5,
+        ]);
+
+        $indicadoresDim5 = [
+            'Os princípios éticos são respeitados nos ambientes que constituem a UEAP.',
+            'A relação de cordialidade entre os servidores é incentivada.',
+            'As condições de trabalho oferecidas pela instituição permitem o desempenho satisfatório das minhas funções.',
+            'As políticas de capacitação da UEAP contribuem para o meu desenvolvimento enquanto servidor.',
+            'A UEAP incentiva boas relações interpessoais no ambiente de trabalho.',
+            'As políticas de admissão de funcionários são transparentes na UEAP.',
+            'Os processos de admissão de funcionários são suficientes para a demanda de servidores no meu setor.',
+            'A Comissão Permanente de Pessoal Docente (CPPD) é eficiente.',
+            'Meu plano de carreira é adequado.',
+            'Os critérios de progressão, avaliação e reconhecimento profissional são claros e institucionalizados.',
+            'A qualificação dos servidores lotados no meu setor é adequada.',
+            'A quantidade de funcionários no meu setor é adequada para a demanda de atividades.',
+            'A relação entre quantidade de servidores da classe e carga de trabalho exigida é bem distribuída.',
+            'Os canais de comunicação institucional (SIGAA / e-mail) atendem à comunidade acadêmica de forma satisfatória.',
+        ];
+
+        foreach ($indicadoresDim5 as $index => $texto) {
+
+            $question = $dimension5->questions()->create([
+                'survey_id' => $survey->id,
+                'text' => $texto,
+                'type' => QuestionType::LIKERT,
+                'required' => true,
+                'order' => $index + 1,
+            ]);
+
+            $this->createLikertScale7($question);
+        } //fim 5
+
+        /*
+        |--------------------------------------------------------------------------
+        | Dimensão VI – Organização e gestão da instituição
+        |--------------------------------------------------------------------------
+        */
+
+        $dimension6 = $survey->dimensions()->create([
+            'name' => 'Dimensão VI – Organização e gestão da instituição',
+            'order' => 6,
+        ]);
+
+        $indicadoresDim6 = [
+            'Os coordenadores de cursos cumprem de maneira satisfatória suas funções.',
+            'As chefias de setores e pró-reitorias cumprem de maneira satisfatória suas funções.',
+            'As comissões, comitês e câmaras cumprem de maneira satisfatória suas funções.',
+            'A Gestão da Reitoria da UEAP e seu gabinete cumprem de maneira satisfatória suas funções.',
+            'Há participação efetiva dos diferentes segmentos da comunidade universitária nos processos decisórios.',
+            'As tomadas de decisões na Instituição são democráticas.',
+            'As instâncias deliberativas e de gestão possuem autonomia compatível com suas atribuições institucionais.',
+            'A gestão da instituição é transparente.',
+            'As gestões internas da UEAP explicitam seus planejamentos anuais.',
+            'A atuação das representatividades no Conselho Superior (CONSU) é satisfatória.',
+            'A atuação do Colegiado do Curso é autônoma.',
+            'A atuação da Pró-Reitoria de Graduação (Prograd) é satisfatória.',
+            'A atuação da Pró-Reitoria de Pesquisa e Pós-Graduação (Propesp) é satisfatória.',
+            'A atuação da Pró-Reitoria de Extensão (Proext) é satisfatória.',
+            'A atuação da Pró-Reitoria de Planejamento e Administração (Proplad) é satisfatória.',
+        ];
+
+        foreach ($indicadoresDim6 as $index => $texto) {
+
+            $question = $dimension6->questions()->create([
+                'survey_id' => $survey->id,
+                'text' => $texto,
+                'type' => QuestionType::LIKERT,
+                'required' => true,
+                'order' => $index + 1,
+            ]);
+
+            $this->createLikertScale7($question);
+        } //fim 6
+
+        /*
+        |--------------------------------------------------------------------------
+        | Dimensão VII – Infraestrutura física e recursos de informação
+        |--------------------------------------------------------------------------
+        */
+
+        $dimension7 = $survey->dimensions()->create([
+            'name' => 'Dimensão VII – Infraestrutura física e recursos de informação',
+            'order' => 7,
+        ]);
+
+        $indicadoresDim7 = [
+            'A infraestrutura da biblioteca (mesas, cadeiras, espaço físico, computadores, exemplares disponíveis) atende às necessidades da comunidade acadêmica de forma satisfatória.',
+            'Os serviços prestados pela biblioteca (renovação, empréstimos, acesso a portais, atendimento, etc.) são satisfatórios.',
+            'O acervo bibliográfico é suficiente e atualizado para atender às necessidades da comunidade acadêmica.',
+            'Há equipamentos de conectividade digital adequados e suficientes para executar minhas atividades.',
+            'Existem políticas institucionais para manutenção, ampliação e melhoria da infraestrutura.',
+            'As áreas comunitárias dos campi são satisfatórias.',
+            'A higiene e a conservação das dependências da UEAP são satisfatórias.',
+            'As dependências dos campi são adequadas para atender às pessoas com deficiência ou mobilidade reduzida.',
+            'Os campi possuem acesso à internet de qualidade.',
+            'A qualidade dos equipamentos audiovisuais é adequada às necessidades dos campi.',
+            'A quantidade de equipamentos audiovisuais é adequada às necessidades dos campi.',
+            'Os campi possuem salas de aula com iluminação, conservação, climatização, dimensão, comodidade e limpeza adequadas.',
+            'Há infraestrutura para a alimentação da comunidade acadêmica nos campi.',
+        ];
+
+        foreach ($indicadoresDim7 as $index => $texto) {
+
+            $question = $dimension7->questions()->create([
+                'survey_id' => $survey->id,
+                'text' => $texto,
+                'type' => QuestionType::LIKERT,
+                'required' => true,
+                'order' => $index + 1,
+            ]);
+
+            $this->createLikertScale7($question);
+        } //fim 7
+
+        /*
+        |--------------------------------------------------------------------------
+        | Dimensão VIII – Planejamento e avaliação institucional
+        |--------------------------------------------------------------------------
+        */
+
+        $dimension8 = $survey->dimensions()->create([
+            'name' => 'Dimensão VIII – Planejamento e avaliação institucional',
+            'order' => 8,
+        ]);
+
+        $indicadoresDim8 = [
+            'Meu setor executa autoavaliações internas.',
+            'Participo de autoavaliações executadas pelo meu setor.',
+            'A Comissão Própria de Avaliação (CPA) atua satisfatoriamente.',
+            'Os resultados das avaliações institucionais anteriores foram divulgados.',
+            'O planejamento da UEAP é colaborativo e possui representantes docentes, discentes e técnicos.',
+            'As gestões internas da UEAP incorporam as sugestões divulgadas nos relatórios de avaliação institucional no seu planejamento.',
+        ];
+
+        foreach ($indicadoresDim8 as $index => $texto) {
+
+            $question = $dimension8->questions()->create([
+                'survey_id' => $survey->id,
+                'text' => $texto,
+                'type' => QuestionType::LIKERT,
+                'required' => true,
+                'order' => $index + 1,
+            ]);
+
+            $this->createLikertScale7($question);
+        } //fim 8
+
+        /*
+        |--------------------------------------------------------------------------
+        | Dimensão IX – Políticas de atendimento aos estudantes
+        |--------------------------------------------------------------------------
+        */
+
+        $dimension9 = $survey->dimensions()->create([
+            'name' => 'Dimensão IX – Políticas de atendimento aos estudantes',
+            'order' => 9,
+        ]);
+
+        $indicadoresDim9 = [
+            'A recepção e socialização de ingressantes é feita de forma clara e objetiva.',
+            'O Programa de Assistência Estudantil é satisfatório.',
+            'Conheço as ações de permanência estudantil da UEAP.',
+            'As ações de permanência estudantil são satisfatórias.',
+            'O atendimento da Unidade de Assistência Estudantil (PROEXT/DACAE/UAE) é satisfatório.',
+            'O atendimento da Coordenação de curso é satisfatório.',
+            'O atendimento da Divisão de Registro e Controle Acadêmico (DRCA) é satisfatório.',
+            'O atendimento do Setor de Estágio é satisfatório.',
+            'O atendimento da Unidade de Educação Inclusiva (UEI) é satisfatório.',
+            'A Instituição considera as avaliações e demandas estudantis na formulação de políticas institucionais.',
+            'Existe um diálogo constante entre a Instituição e as Diretorias Acadêmicas.',
+        ];
+
+        foreach ($indicadoresDim9 as $index => $texto) {
+
+            $question = $dimension9->questions()->create([
+                'survey_id' => $survey->id,
+                'text' => $texto,
+                'type' => QuestionType::LIKERT,
+                'required' => true,
+                'order' => $index + 1,
+            ]);
+
+            $this->createLikertScale6SemNSA($question);
+        } //fim 9
+
+        /*
+        |--------------------------------------------------------------------------
+        | Dimensão X – Sustentabilidade financeira
+        |--------------------------------------------------------------------------
+        */
+
+        $dimension10 = $survey->dimensions()->create([
+            'name' => 'Dimensão X – Sustentabilidade financeira',
+            'order' => 10,
+        ]);
+
+        $indicadoresDim10 = [
+            'A política orçamentária da UEAP é transparente e coerente.',
+            'A construção do orçamento institucional é democrática e participativa, envolvendo os diferentes setores da comunidade acadêmica.',
+            'A previsão e a execução financeira direcionada para o ensino, a pesquisa e a extensão são eficazes.',
+            'O planejamento financeiro garante a continuidade das atividades institucionais.',
+            'Há disponibilidade de recursos para a expansão e crescimento da oferta institucional.',
+            'Há estratégias institucionais para captação de recursos e fortalecimento da sustentabilidade financeira.',
+        ];
+
+        foreach ($indicadoresDim10 as $index => $texto) {
+
+            $question = $dimension10->questions()->create([
+                'survey_id' => $survey->id,
+                'text' => $texto,
+                'type' => QuestionType::LIKERT,
+                'required' => true,
+                'order' => $index + 1,
+            ]);
+
+            $this->createLikertScale7($question);
+        } //fim 10
 
 
         
