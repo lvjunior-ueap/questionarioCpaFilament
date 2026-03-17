@@ -8,6 +8,12 @@
 
 <h1>{{ $survey->name }}</h1>
 
+<p>Usuário: {{ auth()->user()->name }}</p>
+<form method="POST" action="{{ route('logout') }}">
+    @csrf
+    <button type="submit">Sair</button>
+</form>
+
 <p style="white-space: pre-line;">
     {{ $survey->intro_text }}
 </p>
