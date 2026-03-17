@@ -503,7 +503,7 @@ TEXT
 
             $this->createLikertScale7($question);
         } //fim 10
-
+    }// fim do run
 
         
         private function createOptions(Question $question, array $labels): void

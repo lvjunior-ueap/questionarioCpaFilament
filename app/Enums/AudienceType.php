@@ -7,7 +7,10 @@ enum AudienceType: string
     case DISCENTE = 'discente';
     case DOCENTE = 'docente';
     case TECNICO = 'tecnico';
-    case GESTOR = 'gestor';
+    case GESTAO = 'gestor';
+    case COMUNIDADE_EXTERNA = 'comunidade_externa';
+    case EGRESSO = 'egresso';
+    case TRANSPOSICAO = 'transposicao';
 
     public function label(): string
     {
@@ -15,7 +18,10 @@ enum AudienceType: string
             self::DISCENTE => 'Discente',
             self::DOCENTE => 'Docente',
             self::TECNICO => 'Técnico Administrativo',
-            self::GESTOR => 'Gestão',
+            self::GESTAO => 'Gestão',
+            self::COMUNIDADE_EXTERNA => 'Comunidade Externa',
+            self::EGRESSO => 'Egresso',
+            self::TRANSPOSICAO => 'Funcionários de Transposição',
         };
     }
 }

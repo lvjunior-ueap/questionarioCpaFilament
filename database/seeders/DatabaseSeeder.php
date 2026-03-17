@@ -19,6 +19,10 @@ class DatabaseSeeder extends Seeder
         $this->call(DocenteSurvey2026Seeder::class);
         $this->call(TecnicoSurvey2026Seeder::class);
         $this->call(DiscenteSurvey2026Seeder::class);
+        $this->call(ComunidadeExternaSurvey2026Seeder::class);
+        $this->call(EgressoSurvey2026Seeder::class);
+        $this->call(GestaoSurvey2026Seeder::class);
+        $this->call(TransposicaoSurvey2026Seeder::class);
 
         // User::factory(10)->create();
 
