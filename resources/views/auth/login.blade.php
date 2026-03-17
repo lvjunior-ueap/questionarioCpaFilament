@@ -1,36 +1,35 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login - CPA 2026</title>
-</head>
-<body>
-    <h1>Login</h1>
-    <p>Use seu CPF e senha para acessar o questionário.</p>
+@extends('layouts.app')
 
-    @if ($errors->any())
-        <div style="color: red;">
-            {{ $errors->first() }}
-        </div>
-    @endif
+@section('title', 'Login - CPA 2026')
 
-    <form method="POST" action="{{ route('login.attempt') }}">
-        @csrf
+@section('content')
+    <section class="card" style="max-width: 520px; margin: 0 auto;">
+        <h1>Login de acesso</h1>
+        <p class="muted">Informe seu CPF e senha para ser direcionado automaticamente ao questionário correspondente.</p>
 
-        <label for="cpf">CPF</label><br>
-        <input id="cpf" name="cpf" type="text" value="{{ old('cpf') }}" required><br><br>
+        @if ($errors->any())
+            <div class="alert" role="alert">
+                {{ $errors->first() }}
+            </div>
+        @endif
 
-        <label for="password">Senha</label><br>
-        <input id="password" name="password" type="password" required><br><br>
+        <form method="POST" action="{{ route('login.attempt') }}" class="grid" style="margin-top: 12px;">
+            @csrf
 
-        <label>
-            <input type="checkbox" name="remember" value="1"> Manter conectado
-        </label><br><br>
+            <label for="cpf">CPF</label>
+            <input id="cpf" name="cpf" type="text" value="{{ old('cpf') }}" required>
 
-        <button type="submit">Entrar</button>
-    </form>
+            <label for="password">Senha</label>
+            <input id="password" name="password" type="password" required>
 
-    <p><a href="{{ route('landing') }}">Voltar</a></p>
-</body>
-</html>
+            <label>
+                <input type="checkbox" name="remember" value="1"> Manter conectado
+            </label>
+
+            <div class="actions">
+                <button class="btn" type="submit">Entrar</button>
+                <a class="btn btn-outline" href="{{ route('landing') }}">Voltar</a>
+            </div>
+        </form>
+    </section>
+@endsection
