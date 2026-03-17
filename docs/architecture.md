@@ -2,199 +2,55 @@
 
 ## 📊 Visão Geral
 
-Sistema de avaliação institucional baseado no modelo do **SINAES (MEC)**, implementado em Laravel.
+Sistema de avaliação institucional baseado no SINAES/MEC, com surveys por público e captura estruturada de respostas.
 
-Estrutura orientada a:
+## 🔄 Fluxo principal
 
-* Clareza
-* Rastreabilidade
-* Fidelidade ao documento oficial da CPA
+1. Usuário acessa `/` (landing page).
+2. Faz login em `/login` com **CPF + senha**.
+3. Sistema redireciona:
+   - admin → `/admin/reports`
+   - não-admin → `/survey/{audience}`
+4. Usuário responde questionário.
+5. Sistema grava:
+   - `responses` (submissão)
+   - `answers` (resposta por pergunta, em JSON)
 
----
+## 🧱 Modelo de dados
 
-## 🧱 Modelo de Dados
-
-Hierarquia principal:
-
-```
+```text
 Survey
 ├── Questions (gerais)
 ├── Dimensions
 │   └── Questions
+│       └── Options
 └── Responses
     └── Answers
 ```
 
----
+### Entidades
 
-## 🧩 Entidades principais
+- **Survey**: name, audience, year, version, is_active, intro_text
+- **Dimension**: survey_id, name, order
+- **Question**: survey_id, dimension_id (nullable), text, type, required, order
+- **Option**: question_id, label, value, order
+- **Response**: survey_id, respondent_hash (nullable)
+- **Answer**: response_id, question_id, value (json)
+- **User**: name, email, cpf, audience (nullable), is_admin
 
-### Survey
+## 🔐 Autorização
 
-Representa um questionário completo.
+- Rotas de survey exigem autenticação.
+- Middleware de audiência impede usuário comum de acessar survey de outro público.
+- Relatório administrativo é protegido por middleware de admin.
 
-Campos principais:
+## 👨‍💼 Consulta admin
 
-* name
-* audience (enum)
-* year
-* version
-* is_active
-* intro_text
+A consulta simples em `/admin/reports` traz por survey:
 
-Relacionamentos:
+- quantidade de respostas (`withCount('responses')`)
+- data/hora da última resposta (`withMax('responses', 'created_at')`)
 
-* `dimensions()`
-* `questions()` ← geral
-* `generalQuestions()` ← sem dimensão
-* `finalQuestions()` ← pergunta final (ex: sugestões)
+## 🎨 Interface
 
----
-
-### Dimension
-
-Agrupa perguntas por tema (SINAES I–X)
-
-* survey_id
-* name
-* order
-
----
-
-### Question
-
-Elemento central do sistema.
-
-* survey_id (obrigatório)
-* dimension_id (opcional)
-* text
-* type (enum)
-* required
-* order
-
-Tipos:
-
-* RADIO
-* CHECKBOX
-* LIKERT
-* TEXT
-
----
-
-### Option
-
-Opções de resposta para perguntas fechadas.
-
-* question_id
-* label
-* value
-* order
-
----
-
-### Response
-
-Representa uma submissão completa de um usuário.
-
-* survey_id
-* respondent_hash (anonimato)
-
----
-
-### Answer
-
-Resposta individual de uma pergunta.
-
-* response_id
-* question_id
-* value (JSON/array)
-
----
-
-## 📊 Escalas Likert
-
-### Likert 7 (padrão)
-
-* Não sei
-* Não se aplica
-* Discordo totalmente
-* Discordo parcialmente
-* Indiferente
-* Concordo parcialmente
-* Concordo totalmente
-
----
-
-### Likert 6 (sem NSA)
-
-* Não sei
-* Discordo totalmente
-* Discordo parcialmente
-* Indiferente
-* Concordo parcialmente
-* Concordo totalmente
-
----
-
-## ⚠️ Particularidades
-
-### Dimensão IV (Comunicação)
-
-Possui 3 blocos:
-
-1. CHECKBOX (formas de comunicação)
-2. LIKERT por meio (escala 6)
-3. Indicadores gerais (escala 6)
-
----
-
-### Dimensão IX
-
-* Usa escala Likert 6
-
----
-
-### Perguntas fora de dimensão
-
-Separadas em:
-
-* `generalQuestions()` → início
-* `finalQuestions()` → final (ex: sugestões)
-
----
-
-## 🧠 Decisões arquiteturais
-
-* ❌ Sem abstração excessiva
-* ❌ Sem geração dinâmica
-* ✅ Seeders explícitos
-* ✅ Código repetido intencionalmente
-
-Motivo:
-
-> Permitir validação direta pela equipe da CPA
-
----
-
-## 🔄 Fluxo de dados
-
-1. Usuário acessa survey
-2. Sistema carrega:
-
-   * perguntas gerais
-   * dimensões + perguntas
-3. Usuário responde
-4. Cria:
-
-   * Response
-   * Answers vinculados
-
----
-
-## 🎯 Objetivo do sistema
-
-* Avaliação institucional confiável
-* Estrutura auditável
-* Aderência ao SINAES
-
----
+As telas públicas/admin usam layout unificado com estilo institucional (cores azul/laranja), melhorando legibilidade e acolhimento.
