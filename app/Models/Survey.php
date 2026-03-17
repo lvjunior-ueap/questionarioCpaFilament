@@ -43,6 +43,12 @@ class Survey extends Model
             ->orderBy('order');
     }
 
+    public function questions()
+    {
+        return $this->hasMany(Question::class)
+            ->orderBy('order');
+    }
+
     public function generalQuestions()
     {
         return $this->hasMany(Question::class)
