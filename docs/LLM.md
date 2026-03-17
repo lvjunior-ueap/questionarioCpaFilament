@@ -214,3 +214,90 @@ Este projeto foi construído priorizando:
 E NÃO otimização de código.
 
 ---
+
+### 🔹 Criação de perguntas
+
+- Perguntas SEMPRE devem ser criadas via relacionamento:
+
+  - Dentro de dimensão:
+    $dimension->questions()->create([...])
+
+  - Fora de dimensão:
+    $survey->questions()->create([...]) com dimension_id = null
+
+- NUNCA criar perguntas diretamente com Question::create sem contexto
+
+---
+
+### 🔹 Estrutura obrigatória
+
+- Toda Question DEVE ter:
+  - survey_id obrigatório
+  - dimension_id pode ser null
+
+---
+
+### 🔹 Ordem de criação (seeders)
+
+SEMPRE seguir:
+
+1. Criar Survey
+2. Criar perguntas gerais (sem dimensão)
+3. Criar Dimensions
+4. Criar Questions dentro das Dimensions
+5. Criar Options
+
+---
+
+### 🔹 Escalas Likert
+
+- NÃO alterar textos das opções
+- NÃO alterar ordem
+- NÃO criar novas variações
+
+---
+
+### 🔹 Dimensão IV (REGRA CRÍTICA)
+
+SEMPRE seguir 3 blocos:
+
+1. CHECKBOX (formas)
+2. LIKERT por meio (escala 6)
+3. Indicadores (escala 6)
+
+---
+
+### 🔹 Dimensão IX
+
+- SEMPRE usar Likert 6
+- NUNCA usar "Não se aplica"
+
+---
+
+### 🔹 Seeders
+
+- NÃO refatorar
+- NÃO usar loops genéricos avançados
+- NÃO criar abstrações
+- REPETIÇÃO É INTENCIONAL
+
+---
+
+### 🔹 Respostas (Answers)
+
+- value é armazenado como ARRAY (JSON)
+- CHECKBOX → array de valores
+- RADIO / LIKERT → valor único
+- TEXT → string
+
+---
+
+### 🔹 Proibições
+
+NUNCA:
+
+- Unificar seeders
+- Criar factories para perguntas
+- Criar geradores dinâmicos
+- Alterar estrutura das dimensões
+- Alterar textos das perguntas
