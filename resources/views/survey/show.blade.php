@@ -8,6 +8,13 @@
         <p class="muted">Usuário: {{ auth()->user()->name }}</p>
         <p style="white-space: pre-line;">{{ $survey->intro_text }}</p>
 
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <p class="progress-text">Progresso: <span id="progress-text">0 de {{ $totalQuestions }}</span></p>
+        </div>
+
         <form method="POST" action="{{ route('logout') }}" class="actions">
             @csrf
             <button class="btn btn-outline" type="submit">Sair</button>
@@ -54,7 +61,49 @@
         @endif
 
         <section class="actions">
-            <button class="btn btn-secondary" type="submit">Enviar respostas</button>
+            <button class="btn btn-secondary" type="submit" id="submit-btn">Enviar respostas</button>
         </section>
     </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const total = {{ $totalQuestions }};
+            const progressFill = document.getElementById('progress-fill');
+            const progressText = document.getElementById('progress-text');
+
+            function updateProgress() {
+                let answered = 0;
+
+                // Radios: count unique groups with selection
+                const radioGroups = {};
+                document.querySelectorAll('input[type="radio"]').forEach(r => {
+                    if (!radioGroups[r.name]) radioGroups[r.name] = false;
+                    if (r.checked) radioGroups[r.name] = true;
+                });
+                answered += Object.values(radioGroups).filter(v => v).length;
+
+                // Checkboxes: count unique groups with at least one checked
+                const checkboxGroups = {};
+                document.querySelectorAll('input[type="checkbox"]').forEach(c => {
+                    if (!checkboxGroups[c.name]) checkboxGroups[c.name] = false;
+                    if (c.checked) checkboxGroups[c.name] = true;
+                });
+                answered += Object.values(checkboxGroups).filter(v => v).length;
+
+                // Textareas: count if has value
+                document.querySelectorAll('textarea').forEach(t => {
+                    if (t.value.trim()) answered++;
+                });
+
+                const percent = (answered / total) * 100;
+                progressFill.style.width = percent + '%';
+                progressText.textContent = answered + ' de ' + total;
+            }
+
+            document.querySelectorAll('input[type="radio"], input[type="checkbox"], textarea').forEach(input => {
+                input.addEventListener('change', updateProgress);
+                if (input.type === 'textarea') input.addEventListener('input', updateProgress);
+            });
+        });
+    </script>
 @endsection

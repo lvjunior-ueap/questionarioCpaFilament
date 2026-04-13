@@ -24,6 +24,7 @@
                     <th>Ativo</th>
                     <th>Respostas</th>
                     <th>Última resposta</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,10 +37,17 @@
                         <td>{{ $survey->is_active ? 'Sim' : 'Não' }}</td>
                         <td>{{ $survey->responses_count }}</td>
                         <td>{{ $survey->responses_max_created_at ?? 'Sem respostas' }}</td>
+                        <td>
+                            @if($survey->responses_count > 0)
+                                <a href="{{ route('admin.reports.pdf', $survey) }}" class="btn btn-secondary" target="_blank">Gerar PDF</a>
+                            @else
+                                Sem respostas
+                            @endif
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7">Nenhum questionário encontrado.</td>
+                        <td colspan="8">Nenhum questionário encontrado.</td>
                     </tr>
                 @endforelse
             </tbody>

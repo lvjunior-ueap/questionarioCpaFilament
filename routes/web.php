@@ -29,4 +29,5 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/reports', [AdminReportController::class, 'index'])->name('admin.reports');
+    Route::get('/admin/reports/{survey}/pdf', [AdminReportController::class, 'pdf'])->name('admin.reports.pdf');
 });

@@ -3,30 +3,40 @@
 @endphp
 
 @if($question->type->value === 'radio')
-    @foreach($question->options as $option)
-        <label>
-            <input type="radio" name="{{ $name }}" value="{{ $option->value }}">
-            {{ $option->label }}
-        </label><br>
-    @endforeach
+    <fieldset>
+        <legend class="sr-only">{{ $question->text }}</legend>
+        @foreach($question->options as $option)
+            <label>
+                <input type="radio" name="{{ $name }}" value="{{ $option->value }}" required="{{ $question->required ? 'required' : '' }}">
+                {{ $option->label }}
+            </label><br>
+        @endforeach
+    </fieldset>
 
 @elseif($question->type->value === 'checkbox')
-    @foreach($question->options as $option)
-        <label>
-            <input type="checkbox" name="{{ $name }}[]" value="{{ $option->value }}">
-            {{ $option->label }}
-        </label><br>
-    @endforeach
+    <fieldset>
+        <legend class="sr-only">{{ $question->text }}</legend>
+        @foreach($question->options as $option)
+            <label>
+                <input type="checkbox" name="{{ $name }}[]" value="{{ $option->value }}">
+                {{ $option->label }}
+            </label><br>
+        @endforeach
+    </fieldset>
 
 @elseif($question->type->value === 'likert')
-    @foreach($question->options as $option)
-        <label style="margin-right:10px;">
-            <input type="radio" name="{{ $name }}" value="{{ $option->value }}">
-            {{ $option->label }}
-        </label>
-    @endforeach
+    <fieldset>
+        <legend class="sr-only">{{ $question->text }}</legend>
+        @foreach($question->options as $option)
+            <label style="margin-right:10px;">
+                <input type="radio" name="{{ $name }}" value="{{ $option->value }}" required="{{ $question->required ? 'required' : '' }}">
+                {{ $option->label }}
+            </label>
+        @endforeach
+    </fieldset>
 
 @elseif($question->type->value === 'text')
-    <textarea name="{{ $name }}" rows="4" cols="60"></textarea>
+    <label for="answer-{{ $question->id }}">{{ $question->text }}</label>
+    <textarea id="answer-{{ $question->id }}" name="{{ $name }}" rows="4" cols="60" required="{{ $question->required ? 'required' : '' }}"></textarea>
 @endif
 

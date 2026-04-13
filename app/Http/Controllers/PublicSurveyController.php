@@ -21,7 +21,11 @@ class PublicSurveyController extends Controller
             ])
             ->firstOrFail();
 
-        return view('survey.show', compact('survey'));
+        $totalQuestions = $survey->generalQuestions->count() +
+                          $survey->dimensions->sum(fn($d) => $d->questions->count()) +
+                          $survey->finalQuestions->count();
+
+        return view('survey.show', compact('survey', 'totalQuestions'));
     }
 
     public function submit(Request $request, string $audience)
@@ -43,7 +47,7 @@ class PublicSurveyController extends Controller
             ]);
         }
 
-        return redirect()->route('survey.thanks');
+        return redirect()->route('survey.thanks')->with('success', 'Obrigado! Suas respostas foram enviadas com sucesso.');
     }
 
     public function thanks()
