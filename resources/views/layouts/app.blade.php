@@ -114,6 +114,11 @@
     </header>
 
     <main class="container">
+        @if(session('warning'))
+            <div class="alert" style="background: #fff3cd; border: 1px solid #ffc107; color: #856404; padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+                {{ session('warning') }}
+            </div>
+        @endif
         @yield('content')
     </main>
 </body>

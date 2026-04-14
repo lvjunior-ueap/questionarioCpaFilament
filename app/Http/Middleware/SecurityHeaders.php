@@ -15,6 +15,11 @@ class SecurityHeaders
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Force HTTPS in production
+        if (app()->environment('production')) {
+            $request->server->set('HTTPS', 'on');
+        }
+
         $response = $next($request);
 
         // Remove X-Powered-By header (PHP version disclosure)

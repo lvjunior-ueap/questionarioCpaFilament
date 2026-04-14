@@ -32,7 +32,7 @@ return [
     |
     */
 
-    'lifetime' => (int) env('SESSION_LIFETIME', 120),
+    'lifetime' => (int) env('SESSION_LIFETIME', 30),
 
     'expire_on_close' => env('SESSION_EXPIRE_ON_CLOSE', false),
 
@@ -115,6 +115,47 @@ return [
     */
 
     'lottery' => [2, 100],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Session Cookie Secure Flag
+    |--------------------------------------------------------------------------
+    |
+    | This option controls the secure flag sent with the session cookie. When
+    | set to true, the cookie will only be sent over HTTPS connections. In
+    | production, this should always be true for security.
+    |
+    */
+
+    'secure' => env('SESSION_SECURE_COOKIES', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Session Cookie HTTP Only
+    |--------------------------------------------------------------------------
+    |
+    | Setting this value to true will prevent JavaScript from accessing the
+    | value of the cookie and the cookie will only be accessible through
+    | the HTTP protocol. This is generally a good security practice.
+    |
+    */
+
+    'http_only' => env('SESSION_HTTP_ONLY', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Same-Site Cookies
+    |--------------------------------------------------------------------------
+    |
+    | This option determines how your cookies behave when cross-site requests
+    | take place, and can be used to mitigate CSRF attacks. By default, we
+    | will set this value to "lax" since this is a secure default value.
+    |
+    | Supported: "lax", "strict", "none"
+    |
+    */
+
+    'same_site' => env('SESSION_SAME_SITE', 'lax'),
 
     /*
     |--------------------------------------------------------------------------
