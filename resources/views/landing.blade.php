@@ -75,8 +75,8 @@
         }
 
         .landing-overlay {
-            background: rgba(15, 25, 42, 0.28);
-            mix-blend-mode: multiply;
+            background: rgba(15, 25, 42, 0.08);
+            mix-blend-mode: overlay;
         }
 
         .landing-content {
